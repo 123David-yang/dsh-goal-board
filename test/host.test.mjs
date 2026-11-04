@@ -105,6 +105,21 @@ const { apply } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'index
   console.log('  ok  路由鉴权短路');
 }
 
+/* --------------------------------------------------- 6. 内容指纹稳定性 */
+
+{
+  const { buildBoard } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'board-data.js')).href);
+  const root = process.env.GOAL_BOARD_TEST_ROOT;
+  if (root && fs.existsSync(root)) {
+    const a = buildBoard(root);
+    const b = buildBoard(root);
+    assert.equal(a.signature, b.signature, '同样的数据两次构建指纹应一致');
+    console.log('  ok  内容指纹稳定');
+  } else {
+    console.log('  --  跳过指纹测试（未设置 GOAL_BOARD_TEST_ROOT）');
+  }
+}
+
 console.log('\n全部通过');
 
 

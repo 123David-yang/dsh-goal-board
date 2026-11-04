@@ -1,6 +1,6 @@
 * { box-sizing: border-box; }
 
-:root {
+.app, :root {
   --bg: #070a10;
   --panel: #0c121b;
   --panel-2: #101a27;
@@ -231,6 +231,7 @@ main {
 .gbar.st-done .fill { background: linear-gradient(90deg, rgba(61, 220, 151, .8), rgba(61, 220, 151, .98)); }
 .gbar.st-pending { border-color: rgba(100, 116, 139, .4); background: rgba(100, 116, 139, .1); }
 .gbar.st-pending .fill { background: linear-gradient(90deg, rgba(100, 116, 139, .55), rgba(100, 116, 139, .8)); }
+.gbar.st-pending .lbl { color: #dbe4f0; text-shadow: none; }
 .gbar.st-blocked .fill { background: linear-gradient(90deg, #b91c1c, #f87171); }
 
 .nowline {
@@ -240,7 +241,7 @@ main {
   pointer-events: none; z-index: 3;
 }
 .nowline::before {
-  content: "现在"; position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+  content: "现在"; position: absolute; top: 2px; left: 6px;
   font-size: 10px; color: #fca5a5; background: rgba(30, 12, 12, .9);
   border: 1px solid rgba(248, 113, 113, .45); border-radius: 4px; padding: 1px 5px; white-space: nowrap;
 }
@@ -353,8 +354,13 @@ main {
 }
 
 @media (max-width: 1200px) {
-  main { grid-template-columns: 1fr; grid-template-areas: "gantt" "rail" "focus" "cards"; }
+  main { grid-template-columns: 1fr; grid-template-areas: "gantt" "focus" "rail" "cards"; }
   .rail-panel { position: static; }
+  .rail { flex-direction: row; overflow-x: auto; gap: 6px; padding: 8px; }
+  .rail-item { min-width: 190px; }
   .focus { grid-template-columns: 1fr; }
   .topbar { grid-template-columns: 1fr; }
+  .gaxis, .gbody { grid-template-columns: 150px minmax(0, 1fr); }
+  .glab { padding-right: 8px; }
+  .cards { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
 }
