@@ -1,0 +1,10 @@
+node_modules/
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# 本地渲染产物
+preview.html
+preview-*.png
+shot-*.png
