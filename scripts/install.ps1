@@ -44,4 +44,5 @@ if ($content -notmatch 'dsh-goal-board') {
 }
 
 Write-Host "已安装到 $dest"
-Write-Host "重启 DSH（或刷新页面）后，左侧栏会出现「看板」入口。"
+Write-Host "重启 DSH 后，会话顶部会多出「看板」标签页（对话 / 轨迹 / 看板）。"
+
