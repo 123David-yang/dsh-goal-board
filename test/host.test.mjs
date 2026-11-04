@@ -61,7 +61,7 @@ const { apply } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'index
     webServer: { register: (route) => { routes.push(route); return () => {}; } },
   };
   apply(ctx, {});
-  assert.deepEqual(routes.map((r) => r.path).sort(), ['/api/goal-board', '/goal-board']);
+  assert.deepEqual(routes.map((r) => r.path).sort(), ['/api/goal-board', '/goal-board', '/goal-board/asset']);
 
   const res = () => {
     const r = { statusCode: 0, headers: {}, body: '', setHeader(k, v) { this.headers[k] = v; }, end(b) { this.body = b; } };
@@ -77,6 +77,16 @@ const { apply } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'index
   await routes.find((r) => r.path === '/api/goal-board').handler({ url: '/api/goal-board' }, api);
   JSON.parse(api.body);
   console.log('  ok  数据路由');
+
+  const asset = res();
+  await routes.find((r) => r.path === '/goal-board/asset').handler({ url: '/goal-board/asset/board.css' }, asset);
+  assert.equal(asset.statusCode, 200);
+  assert.ok(String(asset.body).length > 100, '资源路由应返回内容');
+
+  const evil = res();
+  await routes.find((r) => r.path === '/goal-board/asset').handler({ url: '/goal-board/asset/../../secret' }, evil);
+  assert.equal(evil.statusCode, 400, '目录穿越应被拒绝');
+  console.log('  ok  静态资源与穿越防护');
 }
 
 /* ------------------------------------------------------------ 5. 鉴权 */
@@ -96,4 +106,5 @@ const { apply } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'index
 }
 
 console.log('\n全部通过');
+
 
