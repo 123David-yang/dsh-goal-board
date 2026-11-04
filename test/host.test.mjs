@@ -105,7 +105,32 @@ const { apply } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'index
   console.log('  ok  路由鉴权短路');
 }
 
-/* --------------------------------------------------- 6. 内容指纹稳定性 */
+/* ------------------------------------------------ 6. 真实数据端到端 */
+
+{
+  const root = process.env.GOAL_BOARD_TEST_ROOT;
+  if (root && fs.existsSync(root)) {
+    const { apply: applyReal } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'index.js')).href);
+    process.env.DSH_HOME = root;
+    const routes = [];
+    applyReal({
+      effect: (fn) => { fn(); return () => {}; },
+      get: () => undefined,
+      webServer: { register: (r) => { routes.push(r); return () => {}; } },
+    }, {});
+    const res = { statusCode: 0, headers: {}, body: '', setHeader(k, v) { this.headers[k] = v; }, end(b) { this.body = b; } };
+    await routes.find((r) => r.path === '/api/goal-board').handler({ url: '/api/goal-board' }, res);
+    const model = JSON.parse(res.body);
+    assert.equal(res.statusCode, 200, '真实数据应返回 200');
+    assert.ok(model.phases.length > 0, '真实数据应有阶段');
+    assert.ok(model.signature, '应带内容指纹');
+    console.log('  ok  真实数据端到端（' + model.phases.length + ' 个阶段, ' + model.sessions.length + ' 个会话）');
+  } else {
+    console.log('  --  跳过真实数据测试（未设置 GOAL_BOARD_TEST_ROOT）');
+  }
+}
+
+/* --------------------------------------------------- 7. 内容指纹稳定性 */
 
 {
   const { buildBoard } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'board-data.js')).href);
