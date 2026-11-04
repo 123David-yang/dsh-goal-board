@@ -353,6 +353,14 @@ main > * { min-width: 0; }
 .tip.on { opacity: 1; }
 .tip b { color: var(--txt); font-weight: 600; }
 
+.empty-note {
+  padding: 28px 20px; color: var(--sub); font-size: 13px; line-height: 1.9;
+  text-align: center; border: 1px dashed rgba(148, 163, 184, .25);
+  border-radius: 12px; background: rgba(148, 163, 184, .04); margin: 10px;
+}
+.empty-note b { color: var(--txt); font-size: 15px; }
+.empty-note span { color: var(--dim); font-size: 12px; }
+
 .err {
   padding: 18px; border: 1px solid rgba(248, 113, 113, .4); border-radius: 12px;
   background: rgba(248, 113, 113, .07); color: #fca5a5; font-size: 13px;

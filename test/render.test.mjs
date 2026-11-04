@@ -107,6 +107,19 @@ function check(name, ok) {
   check('长标题卡片仍渲染', get('cards').innerHTML.includes('data-card'));
 }
 
+/* ------------------------------------------------------ 场景 4：没有 goal */
+
+{
+  const model = demoModel();
+  model.phases = [];
+  model.overall = 0;
+  model.empty = true;
+  model.goal = null;
+  const { get } = renderWith(model);
+  check('空态提示', get('chapter').innerHTML.includes('还没有 goal'));
+  check('空态不渲染甘特条', !get('gtracks').innerHTML.includes('gbar'));
+}
+
 if (failed) {
   console.error(failed + ' 项失败');
   process.exit(1);
