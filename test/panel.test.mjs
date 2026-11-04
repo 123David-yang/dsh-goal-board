@@ -109,11 +109,11 @@ const chrome = [
 if (!chrome) {
   console.log('未找到 Chrome，跳过截图');
 } else {
-  const out = path.join(root, 'docs', 'panel-preview.png');
+  const out = path.join(root, 'docs', process.env.PANEL_OUT || 'panel-preview.png');
   fs.rmSync(out, { force: true });
   const child = spawn(chrome, [
     '--headless=new', '--disable-gpu', '--no-sandbox', '--hide-scrollbars',
-    '--timeout=15000', '--window-size=1500,1400',
+    '--timeout=15000', '--window-size=' + (process.env.PANEL_WIDTH || 1500) + ',1400',
     '--screenshot=' + out, `http://127.0.0.1:${port}/panel.html`,
   ], { stdio: 'ignore' });
   await new Promise((resolve) => child.on('exit', resolve));
@@ -128,6 +128,8 @@ if (!chrome) {
 
 server.close();
 process.exit(process.exitCode || 0);
+
+
 
 
 
