@@ -24,3 +24,5 @@ jobs:
         run: node test/a11y.test.mjs
       - name: Performance benchmark
         run: node test/perf.test.mjs
+      - name: Config robustness
+        run: node test/config.test.mjs

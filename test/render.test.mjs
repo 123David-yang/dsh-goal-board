@@ -123,6 +123,8 @@ function check(name, ok) {
   model.goal = null;
   const { get } = renderWith(model);
   check('空态提示', get('hero').innerHTML.includes('还没有 goal'));
+  check('空态给配置示例', get('hero').innerHTML.includes('empty-example') && get('hero').innerHTML.includes('phases'));
+  check('空态有复制按钮', get('hero').innerHTML.includes('empty-copy'));
   check('空态不渲染甘特条', !get('gtracks').innerHTML.includes('gbar'));
 }
 
