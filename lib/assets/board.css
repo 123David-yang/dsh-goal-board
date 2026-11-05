@@ -7,7 +7,7 @@
   --line: rgba(148, 163, 184, .13);
   --txt: #e8effb;
   --sub: #94a6c0;
-  --dim: #5c6c85;
+  --dim: #7a8aa3;
   --done: #3ddc97;
   --active: #38bdf8;
   --pending: #64748b;
@@ -441,7 +441,7 @@ main > * { min-width: 0; }
     --line: rgba(15, 23, 42, .12);
     --txt: #0f172a;
     --sub: #475569;
-    --dim: #7c8797;
+    --dim: #5f6b7c;
     --done: #0f9d68;
     --active: #0284c7;
     --pending: #94a3b8;

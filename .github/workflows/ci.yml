@@ -20,3 +20,5 @@ jobs:
         run: node test/host.test.mjs
       - name: Render tests
         run: node test/render.test.mjs
+      - name: Accessibility tests
+        run: node test/a11y.test.mjs
