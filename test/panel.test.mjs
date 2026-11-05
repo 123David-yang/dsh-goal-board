@@ -34,8 +34,10 @@ const HARNESS = `<!doctype html>
   const JS = ${JSON.stringify(js)};
   const DATA = ${data};
   const realFetch = window.fetch.bind(window);
+  const FAIL = ${JSON.stringify(process.env.PANEL_FAIL === "1")};
   window.fetch = function (url) {
     const u = String(url);
+    if (FAIL && u.indexOf("/api/") >= 0) return Promise.reject(new Error("模拟网络失败"));
     if (u.indexOf('board.css') >= 0) return Promise.resolve(new Response(CSS, { headers: { 'content-type': 'text/css' } }));
     if (u.indexOf('board.js') >= 0) return Promise.resolve(new Response(JS, { headers: { 'content-type': 'text/javascript' } }));
     if (u.indexOf('/api/goal-gantt') >= 0) return Promise.resolve(new Response(JSON.stringify(DATA), { headers: { 'content-type': 'application/json' } }));
@@ -128,6 +130,10 @@ if (!chrome) {
 
 server.close();
 process.exit(process.exitCode || 0);
+
+
+
+
 
 
 
