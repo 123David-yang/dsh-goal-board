@@ -61,7 +61,7 @@ const { apply } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'index
     webServer: { register: (route) => { routes.push(route); return () => {}; } },
   };
   apply(ctx, {});
-  assert.deepEqual(routes.map((r) => r.path).sort(), ['/api/goal-gantt', '/goal-gantt', '/goal-gantt/asset']);
+  assert.deepEqual(routes.map((r) => r.path).sort(), ['/api/goal-gantt', '/api/goal-gantt/init', '/goal-gantt', '/goal-gantt/asset']);
 
   const res = () => {
     const r = { statusCode: 0, headers: {}, body: '', setHeader(k, v) { this.headers[k] = v; }, end(b) { this.body = b; } };
@@ -170,6 +170,88 @@ const { apply } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'index
   } else {
     console.log('  --  跳过指纹测试（未设置 GOAL_BOARD_TEST_ROOT）');
   }
+}
+
+/* ------------------------------------- 12. 一键写入示例配置（受控写） */
+
+{
+  const zlib = await import('node:zlib');
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'goal-gantt-init-'));
+  const ws = path.join(root, 'ws');
+  const projDir = path.join(root, 'storages', 'session_projcache', 'sessions');
+  const started = Date.parse('2026-11-01T00:00:00Z');
+  fs.mkdirSync(projDir, { recursive: true });
+  fs.mkdirSync(ws, { recursive: true });
+
+  fs.writeFileSync(path.join(projDir, 'session-init.json'), JSON.stringify({
+    version: 7,
+    record: {
+      identity: { formatVersion: 4, createdAt: started, cwd: ws, isSeeded: false, delegationDepth: 0 },
+      rows: {
+        title: { val: 'init' },
+        goal: { val: { current: { goal: { id: 'g', objective: 'x', phase: 'active', maxGoalRounds: 3 }, roundsStarted: 0, createdAt: started, updatedAt: started } } },
+        sessionListMetadata: { val: { lastPromptAt: started } },
+        sessionStats: { val: { turns: 1, steps: 1 } },
+        tokenUsage: { val: { totals: {} } },
+        turnOutline: { val: { turns: [] } },
+      },
+    },
+  }));
+  fs.writeFileSync(path.join(projDir, 'session-other.json'), JSON.stringify({
+    version: 7,
+    record: {
+      identity: { formatVersion: 4, createdAt: started, cwd: '', isSeeded: false, delegationDepth: 0 },
+      rows: { title: { val: 'no cwd' }, sessionListMetadata: { val: {} } },
+    },
+  }));
+  const logDirName = '--' + ws.replace(/[^a-zA-Z0-9]+/g, '-') + '--';
+  fs.mkdirSync(path.join(root, 'sessions', logDirName, 'session-init'), { recursive: true });
+  fs.writeFileSync(
+    path.join(root, 'sessions', logDirName, 'session-init', 'session.v4.jsonl.zstd'),
+    zlib.zstdCompressSync(Buffer.from(JSON.stringify({ type: 'turn/start', time: started, data: { turn: 1 } }) + '\n')),
+  );
+
+  const routes = [];
+  const ctx = {
+    get: () => undefined,
+    effect: (fn) => fn(),
+    webServer: { register: (route) => { routes.push(route); return () => {}; } },
+  };
+  apply(ctx, { dataRoot: root });
+  const initRoute = routes.find((r) => r.path === '/api/goal-gantt/init');
+  assert.ok(initRoute, '应注册 init 路由');
+
+  const call = async (req) => {
+    const res = { statusCode: 0, headers: {}, body: '', setHeader(k, v) { this.headers[k] = v; }, end(b) { this.body = b; } };
+    await initRoute.handler(req, res);
+    return res;
+  };
+
+  const notPost = await call({ method: 'GET', url: '/api/goal-gantt/init' });
+  assert.equal(notPost.statusCode, 405, '非 POST 应 405');
+
+  const noId = await call({ method: 'POST', url: '/api/goal-gantt/init', body: '{}' });
+  assert.equal(noId.statusCode, 400, '缺 sessionId 应 400');
+
+  const unknown = await call({ method: 'POST', url: '/api/goal-gantt/init', body: JSON.stringify({ sessionId: 'nope' }) });
+  assert.equal(unknown.statusCode, 404, '未知会话应 404');
+
+  const noCwd = await call({ method: 'POST', url: '/api/goal-gantt/init', body: JSON.stringify({ sessionId: 'session-other' }) });
+  assert.equal(noCwd.statusCode, 404, '无工作区应 404');
+
+  const created = await call({ method: 'POST', url: '/api/goal-gantt/init', body: JSON.stringify({ sessionId: 'session-init' }) });
+  assert.equal(created.statusCode, 200, '首次写入应 200');
+  const written = path.join(ws, 'goal-board', 'board.config.json');
+  assert.ok(fs.existsSync(written), '应生成 board.config.json');
+  const parsed = JSON.parse(fs.readFileSync(written, 'utf8'));
+  assert.ok(Array.isArray(parsed.phases) && parsed.phases.length >= 3, '模板应包含阶段');
+
+  const again = await call({ method: 'POST', url: '/api/goal-gantt/init', body: JSON.stringify({ sessionId: 'session-init' }) });
+  assert.equal(again.statusCode, 409, '已存在时应拒绝覆盖');
+  assert.equal(JSON.parse(fs.readFileSync(written, 'utf8')).phases.length, parsed.phases.length, '原文件不应被改写');
+
+  fs.rmSync(root, { recursive: true, force: true });
+  console.log('  ok  受控写入示例配置');
 }
 
 console.log('\n全部通过');

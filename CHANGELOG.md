@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.26.0 — Create the example config
+- Empty state gets a “Create example config” button backed by `POST /api/goal-gantt/init`.
+- The route only writes `<workspace>/goal-board/board.config.json`, uses exclusive create (`wx`), and returns 409 when a config exists.
+- Privacy section documents this as the single write operation.
+
 ## v0.25.0 — CSV export
 - Hero gains an “Export CSV” action: id, title, status, progress, planned/actual times, duration, segments, checks and summary.
 - The file is UTF-8 with BOM so Excel opens Chinese text correctly.

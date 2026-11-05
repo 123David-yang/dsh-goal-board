@@ -453,7 +453,9 @@ main > * { min-width: 0; }
   font-size: 11.5px; color: var(--dim);
 }
 
-.empty-copy {
+.empty-actions { display: inline-flex; gap: 6px; }
+
+.empty-copy, .empty-init {
   padding: 2px 9px; border-radius: 6px; cursor: pointer; font-size: 11px;
   border: 1px solid var(--line); background: transparent; color: var(--sub); font-family: inherit;
 }

@@ -38,7 +38,7 @@ The UI ships in Chinese and English and follows the system language (`?lang=zh` 
 - **Distance to goal** — remaining phases, rounds and estimated time, folded into the hero
 - **Inline rendering** — lives in the conversation view ring (`对话 / 轨迹 / 看板`), styles isolated with Shadow DOM; a standalone page is available too
 - **No flicker** — a content fingerprint keeps the DOM stable while only the time cursor moves
-- **Empty state** — sessions without a goal get an explanation plus a copyable `board.config.json` example
+- **Empty state** — sessions without a goal get a copyable `board.config.json` example and a one-click “create it” action
 - **Skeleton + retry** — first paint shows a skeleton; failures show the reason, a retry button and a link to the standalone page
 - **Sticky header** — goal, ring and session picker stay visible while scrolling
 - **Click to locate** — clicking a rail item or bar scrolls to that phase and flashes it; Enter/Space works too
@@ -134,7 +134,7 @@ Session logs are **multi-frame zstd** (one frame per flush); Node's `zstdDecompr
 
 ## Privacy
 
-- Read-only: never writes sessions or configs
+- Read-only by default: never writes sessions and never touches an existing config. **The only write** is the empty-state “Create example config” button, which creates `<workspace>/goal-board/board.config.json` and refuses when the file already exists
 - Offline: no network calls, no telemetry
 - In-memory only: parsed results cached for a second, keyed by mtime
 - Routes go through DSH's `connection.requestRejection` trust fence
