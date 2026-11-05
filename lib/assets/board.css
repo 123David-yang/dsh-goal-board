@@ -211,13 +211,14 @@ main > * { min-width: 0; }
 
 .glab {
   display: flex; align-items: center; gap: 8px; min-width: 0; padding-right: 4px;
+  overflow: hidden;
   height: 38px; border-top: 1px dashed rgba(148, 163, 184, .07);
 }
 .glab .gid {
   font-size: 10px; letter-spacing: .08em; color: var(--dim);
   border: 1px solid var(--line); border-radius: 5px; padding: 2px 5px; flex: none;
 }
-.glab .gname { font-size: 12.5px; color: var(--txt); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.glab .gname { font-size: 12.5px; color: var(--txt); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1; }
 
 .gtrack { position: relative; height: 38px; border-top: 1px dashed rgba(148, 163, 184, .07); }
 .gtrack .grid { position: absolute; inset: 0; pointer-events: none; }
@@ -462,4 +463,88 @@ main > * { min-width: 0; }
   .tip { background: rgba(255, 255, 255, .98); }
   .chip { background: rgba(15, 23, 42, .04); }
   .select option { background: #fff; color: #0f172a; }
+}
+
+
+/* ============================================================ Hero 区 */
+
+main { display: flex; flex-direction: column; gap: 12px; align-items: stretch; min-width: 0; }
+main > * { width: 100%; }
+
+.hero { padding: 20px 22px 16px; }
+
+.hero-head { display: flex; align-items: center; gap: 10px; }
+
+.hero-title {
+  margin: 10px 0 8px; font-size: 26px; line-height: 1.25; letter-spacing: .01em;
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+}
+.hero-id {
+  font-size: 12px; letter-spacing: .08em; color: var(--dim);
+  border: 1px solid var(--line); border-radius: 6px; padding: 2px 7px;
+}
+
+.hero-summary {
+  margin: 0 0 18px; font-size: 14px; line-height: 1.75; color: var(--sub);
+  max-width: 920px;
+}
+
+.hero-stats {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px; margin-bottom: 14px; max-width: 880px;
+}
+.stat b {
+  display: block; font-size: 26px; font-weight: 600; line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+.stat b i { font-style: normal; font-size: 13px; color: var(--dim); margin-left: 2px; }
+.stat span { font-size: 11px; color: var(--dim); letter-spacing: .06em; }
+
+.hero-bar { height: 8px; border-radius: 99px; background: rgba(148, 163, 184, .14); overflow: hidden; }
+.hero-bar i {
+  display: block; height: 100%; border-radius: 99px;
+  background: linear-gradient(90deg, var(--cyan), var(--active));
+  transition: width .4s ease;
+}
+
+.hero-foot {
+  display: flex; gap: 18px; flex-wrap: wrap; margin-top: 10px;
+  font-size: 12px; color: var(--dim);
+}
+
+/* ============================================================ 阶段清单 */
+
+.phases { display: flex; flex-direction: column; }
+.phase { border-bottom: 1px solid rgba(148, 163, 184, .08); }
+.phase:last-child { border-bottom: 0; }
+
+.prow {
+  display: grid; grid-template-columns: 12px 52px minmax(0, 1fr) auto;
+  align-items: center; gap: 10px; padding: 10px 16px; cursor: pointer;
+}
+.prow:hover { background: rgba(148, 163, 184, .05); }
+.prow:focus-visible { outline: 2px solid var(--active); outline-offset: -2px; }
+
+.ptitle { font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ppct { font-size: 12px; color: var(--dim); font-variant-numeric: tabular-nums; }
+
+.phase.open { background: rgba(56, 189, 248, .04); }
+
+.pdetail { padding: 2px 16px 16px 74px; display: flex; flex-direction: column; gap: 10px; }
+.pmeta { display: flex; gap: 16px; flex-wrap: wrap; font-size: 11.5px; color: var(--dim); }
+.psummary { margin: 0; font-size: 13px; line-height: 1.7; color: var(--sub); }
+
+.phases .checks { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.phases .check { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--sub); }
+
+@media (prefers-color-scheme: light) {
+  .phase.open { background: #f0f7ff; }
+  .prow:hover { background: rgba(15, 23, 42, .04); }
+}
+
+@container (max-width: 760px) {
+  .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hero-title { font-size: 21px; }
+  .hero-summary { font-size: 13px; }
+  .pdetail { padding-left: 16px; }
 }

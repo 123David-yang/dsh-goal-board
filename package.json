@@ -1,6 +1,6 @@
 {
   "name": "dsh-goal-gantt",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Goal Gantt board for DeepSeek Harness: phase-level progress timeline, current chapter, per-phase summaries and distance to goal.",
   "type": "module",
   "main": "./lib/index.js",
