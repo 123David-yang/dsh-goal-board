@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.23.0 — Big boards
+- Each status group renders at most 40 rows; the rest fold behind a “show more” button.
+- The session list is cached for 3 s instead of rescanning on every request.
+
 ## v0.22.0 — Status groups
 - Phase list is grouped into In progress / Not started / Blocked / Done.
 - The Done group is collapsed by default; group state persists in localStorage.

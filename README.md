@@ -134,6 +134,8 @@ pwsh -File scripts/install.ps1
 - 解析会话日志时**只解析用得上的事件**（`turn/start`、`tool/call`、消息、goal 变更），占体积最大的 `tool/result` 先行文本过滤、不进 `JSON.parse`
 - 投影缓存与日志都按 `mtime + size` 缓存，重复请求只做一次解析
 - 基准（`node test/perf.test.mjs`）：9.5 MB / 20k 事件的会话，冷启动约 **25 ms**，热调用 **< 1 ms**，已接入 CI
+- 分组内超过 40 条时只渲染前 40 条，其余折叠为「显示更多」，避免上千阶段时 DOM 过大
+- 会话列表有 3 秒 TTL 缓存，会话很多时不重复扫描目录
 
 ## 数据来源
 

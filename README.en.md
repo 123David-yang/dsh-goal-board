@@ -118,6 +118,8 @@ Phase progress = share of completed `checks`; without checks it is estimated fro
 - Only relevant events are parsed (`turn/start`, `tool/call`, messages, goal changes); the bulkiest `tool/result` lines are filtered out before `JSON.parse`
 - Projection cache and logs are cached by `mtime + size`
 - Benchmark (`node test/perf.test.mjs`): 9.5 MB / 20k events, cold ~25 ms, warm < 1 ms, wired into CI
+- Groups render at most 40 rows, the rest collapse behind “show more”, so huge boards stay cheap
+- The session list is cached for 3 s to avoid rescanning the directory
 
 ## Data sources
 

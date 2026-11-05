@@ -127,6 +127,21 @@ function check(name, ok) {
   }
 }
 
+/* ------------------------------------------------- 场景 4.6：超大列表 */
+{
+  const model = demoModel();
+  model.phases = Array.from({ length: 60 }, (_, i) => ({
+    id: 'X' + i, title: 'phase ' + i, status: 'pending', progress: 0,
+    segments: [], checks: [], deliverables: [],
+    startedAt: null, endedAt: null, durationMs: null,
+  }));
+  model.distance = { ...model.distance, totalPhases: 60, remainingPhases: 60 };
+  const { get } = renderWith(model);
+  const rows = (get('phases').innerHTML.match(/data-card=/g) || []).length;
+  check('超大列表只渲染前 40 条', rows === 40, String(rows));
+  check('超大列表有“显示更多”', get('phases').innerHTML.includes('group-more'));
+}
+
 /* ------------------------------------------------------ 场景 5：没有 goal */
 {
   const model = demoModel();
