@@ -27,6 +27,7 @@ New-Item -ItemType Directory -Force -Path (Join-Path $dest 'lib') | Out-Null
 Copy-Item (Join-Path $source 'package.json') $dest -Force
 Copy-Item (Join-Path $source 'cordis.patch.yml') $dest -Force
 Copy-Item (Join-Path $source 'README.md') $dest -Force -ErrorAction SilentlyContinue
+Copy-Item (Join-Path $source 'README.en.md') $dest -Force -ErrorAction SilentlyContinue
 Copy-Item (Join-Path $source 'LICENSE') $dest -Force -ErrorAction SilentlyContinue
 Copy-Item (Join-Path $source 'lib\*') (Join-Path $dest 'lib') -Recurse -Force
 

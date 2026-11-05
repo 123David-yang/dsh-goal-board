@@ -1,5 +1,7 @@
 # dsh-goal-gantt · Goal 甘特看板
 
+中文 | [English](README.en.md)
+
 > Phase-level progress board for DeepSeek Harness: current phase, one-line summary, key numbers, a focused Gantt timeline and a collapsible phase list. UI auto-switches between Chinese and English (`?lang=en` / `?lang=zh`).
 
 为 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 提供的 **goal 阶段级进度看板**。
@@ -27,15 +29,15 @@
 - **默认聚焦现在**：打开就看当前时间窗口（以进行中阶段的时长为尺度）
 - **时间轴缩放**：聚焦现在 / 6h / 24h / 全部 四档；「现在」逼近窗口边缘时自动重新取窗（不会跑出视野）
 - **阶段可复用**：同一个 `id` 写多条配置会合并成一条泳道，各时间段单独画条（适合「间断优化」这类反复出现的工作）
-- **当前章节**：自动定位进行中的阶段，显示本阶段耗时、工具调用数、检查项进度、最近轮次
-- **阶段总结汇报**：每阶段一张卡片 —— 摘要、检查项、产出物
-- **距目标面板**：剩余阶段、剩余轮次、预估剩余时间
+- **Hero 当前阶段**：自动定位进行中的阶段，显示阶段名、一句话总结与四个关键数字
+- **阶段清单**：每阶段一行，展开才看摘要、检查项与产出物（默认只展开进行中的那条）
+- **距目标**：剩余阶段、轮次与预估时间，收进 Hero 底部一行
 - **内嵌渲染**：作为 main 面板直接长在 DSH 里，Shadow DOM 隔离样式；也可一键新标签打开
 - **不闪、不跳**：内容指纹（signature）不变时只移动时间游标，不重建 DOM；阶段状态变化才重绘
 - **没有 goal 的会话**显示空态提示，不会按对话轮次编造阶段
 - **加载骨架屏 / 失败重试**：首屏先出骨架，加载失败给出原因、重试按钮和独立页面入口
 - **吸顶头部**：滚动时目标、进度环、会话选择器始终可见
-- **点击定位**：点左侧阶段或甘特条，直接滚到对应总结卡并高亮；轨道项支持键盘 Enter/Space
+- **点击定位**：点甘特条或阶段行，直接滚到对应阶段并高亮；支持键盘 Enter/Space
 - **浅色主题**：跟随系统 `prefers-color-scheme` 自动切换，并支持 `prefers-reduced-motion`
 - **键盘可达**：甘特条与阶段行都能 Tab 聚焦、Enter/Space 展开，带 `aria-label` / `aria-controls`；正文与辅助文字对比度均在 4.5:1 以上
 - **中英双语**：按系统语言自动切换，也可用 `?lang=zh` / `?lang=en` 强制
@@ -68,7 +70,7 @@ pwsh -File scripts/install.ps1
 
 脚本会自动定位 `$env:DSH_HOME/profiles/web`（或 `~/.dsh/profiles/web`），把插件复制进 `node_modules` 并注册 `cordis.patch.yml`。
 
-安装后**重启一次 DSH**，左侧栏出现「看板」图标。
+安装后**重启一次 DSH**，会话顶部出现「看板」标签页。
 
 ## 使用
 
@@ -154,7 +156,11 @@ pwsh -File scripts/install.ps1
 
 ```bash
 node test/host.test.mjs     # 数据层 + 路由 + 鉴权
-node test/render.test.mjs   # 用 DOM 桩跑一遍渲染
+node test/render.test.mjs   # DOM 桩渲染（中英两套断言）
+node test/a11y.test.mjs     # WCAG 对比度 + ARIA 接线
+node test/config.test.mjs   # 异常配置边界
+node test/perf.test.mjs     # 大会话基准
+node test/panel.test.mjs    # Shadow DOM 挂载（无头 Chrome）
 ```
 
 ## 结构
@@ -165,7 +171,7 @@ dsh-goal-gantt/
 │   ├── index.js          host 半侧：/goal-gantt 与 /api/goal-gantt
 │   ├── board-data.js     会话发现、zstd 解码、阶段模型
 │   ├── view.js           HTML 模板（内联 CSS/JS/首屏数据）
-│   ├── client.js         浏览器半侧：侧栏图标 / 主区页面 / 头部按钮
+│   ├── client.js         浏览器半侧：会话视图标签
 │   └── assets/           board.css、board.js
 ├── scripts/install.ps1   手动安装
 ├── test/                 自测与演示数据
