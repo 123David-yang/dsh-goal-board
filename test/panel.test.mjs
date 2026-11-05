@@ -116,7 +116,7 @@ if (!chrome) {
   const child = spawn(chrome, [
     '--headless=new', '--disable-gpu', '--no-sandbox', '--hide-scrollbars',
     '--timeout=15000', '--window-size=' + (process.env.PANEL_WIDTH || 1500) + ',1400',
-    '--screenshot=' + out, `http://127.0.0.1:${port}/panel.html`,
+    '--screenshot=' + out, `http://127.0.0.1:${port}/panel.html?lang=${process.env.PANEL_LANG || 'zh'}`,
   ], { stdio: 'ignore' });
   await new Promise((resolve) => child.on('exit', resolve));
 

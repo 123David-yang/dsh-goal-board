@@ -1,5 +1,7 @@
 # dsh-goal-gantt · Goal 甘特看板
 
+> Phase-level progress board for DeepSeek Harness: current phase, one-line summary, key numbers, a focused Gantt timeline and a collapsible phase list. UI auto-switches between Chinese and English (`?lang=en` / `?lang=zh`).
+
 为 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 提供的 **goal 阶段级进度看板**。
 
 它不记录单个工具调用，而是把一次长任务切成若干「章节（阶段）」，回答三个问题：
@@ -29,6 +31,7 @@
 - **点击定位**：点左侧阶段或甘特条，直接滚到对应总结卡并高亮；轨道项支持键盘 Enter/Space
 - **浅色主题**：跟随系统 `prefers-color-scheme` 自动切换，并支持 `prefers-reduced-motion`
 - **键盘可达**：甘特条与阶段行都能 Tab 聚焦、Enter/Space 展开，带 `aria-label` / `aria-controls`；正文与辅助文字对比度均在 4.5:1 以上
+- **中英双语**：按系统语言自动切换，也可用 `?lang=zh` / `?lang=en` 强制
 - 标签页不可见时暂停轮询，不打扰 DSH 其它功能
 - **多会话切换**：页头下拉可直接切换到其它会话的 goal（● 表示该会话有 goal）
 - **零依赖、零构建**：只用 Node 内置模块，浏览器侧手写 bundle，装完即用

@@ -12,7 +12,7 @@ const root = path.join(HERE, '..');
 const { demoModel } = await import(pathToFileURL(path.join(HERE, 'demo.mjs')).href);
 const boardJs = fs.readFileSync(path.join(root, 'lib', 'assets', 'board.js'), 'utf8');
 
-function renderWith(data) {
+function renderWith(data, lang) {
   const store = new Map();
   const makeEl = () => ({
     textContent: '', innerHTML: '', title: '',
@@ -37,7 +37,7 @@ function renderWith(data) {
       body: { appendChild() {} },
       title: '',
     },
-    navigator: {},
+    navigator: { language: lang || 'zh-CN' },
     console,
     setInterval: () => 0,
     clearInterval: () => {},
@@ -114,6 +114,25 @@ function check(name, ok) {
   const { get } = renderWith(model);
   check('空态提示', get('hero').innerHTML.includes('还没有 goal'));
   check('空态不渲染甘特条', !get('gtracks').innerHTML.includes('gbar'));
+}
+
+/* ------------------------------------------------------ 场景 6：英文 */
+{
+  const { get } = renderWith(demoModel(), 'en-US');
+  check('英文：Hero 标题', get('hero').innerHTML.includes('Current phase'));
+  check('英文：四个数字标签', get('hero').innerHTML.includes('Phase progress') && get('hero').innerHTML.includes('Phases left'));
+  check('英文：阶段数量', get('phases-hint').textContent.includes('phases'));
+  check('英文：aria-label 用英文', get('gtracks').innerHTML.includes('% done'));
+  check('英文：页脚', get('foot').innerHTML.includes('Session'));
+}
+
+{
+  const model = demoModel();
+  model.phases = [];
+  model.empty = true;
+  model.goal = null;
+  const { get } = renderWith(model, 'en-US');
+  check('英文：空态', get('hero').innerHTML.includes('No goal in this session'));
 }
 
 if (failed) {
