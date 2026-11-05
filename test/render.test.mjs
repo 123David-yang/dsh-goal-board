@@ -68,6 +68,7 @@ function check(name, ok) {
   check('Hero 进度条', get('hero').innerHTML.includes('hero-bar'));
   check('甘特标签', get('glabels').innerHTML.includes('glab'));
   check('甘特条', get('gtracks').innerHTML.includes('gbar'));
+  check('条形不溢出到左侧标签列', !/left:-/.test(get('gtracks').innerHTML));
   check('现在游标', get('gtracks').innerHTML.includes('nowline'));
   check('时间刻度', get('gaxis').innerHTML.includes('tick'));
   check('阶段清单', get('phases').innerHTML.includes('data-card'));

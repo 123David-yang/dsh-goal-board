@@ -220,7 +220,7 @@ main > * { min-width: 0; }
 }
 .glab .gname { font-size: 12.5px; color: var(--txt); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1; }
 
-.gtrack { position: relative; height: 38px; border-top: 1px dashed rgba(148, 163, 184, .07); }
+.gtrack { position: relative; height: 38px; border-top: 1px dashed rgba(148, 163, 184, .07); overflow: hidden; }
 .gtrack .grid { position: absolute; inset: 0; pointer-events: none; }
 .gtrack .gl { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(148, 163, 184, .07); }
 
@@ -547,4 +547,35 @@ main > * { width: 100%; }
   .hero-title { font-size: 21px; }
   .hero-summary { font-size: 13px; }
   .pdetail { padding-left: 16px; }
+}
+
+
+/* ================================================= 窄面板（<900px） */
+
+@container (max-width: 900px) {
+  .topbar {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 12px; padding: 10px 12px; align-items: center;
+  }
+  .brand h1, .brand .sub { display: none; }
+  .logo { width: 34px; height: 34px; border-radius: 10px; font-size: 16px; }
+  .obj-label { display: none; }
+  .obj-text { -webkit-line-clamp: 1; font-size: 12.5px; }
+  .session-pick { margin-top: 4px; }
+  .select { max-width: 220px; font-size: 11px; }
+  .head-right { gap: 10px; }
+  .chips { display: none; }
+  .ring { width: 52px; height: 52px; }
+  .ring span { font-size: 14px; }
+
+  .gaxis, .gbody { grid-template-columns: 118px minmax(0, 1fr); gap: 8px; }
+  .glab .gid { display: none; }
+  .glab .gname { font-size: 11.5px; }
+
+  .hero { padding: 16px 14px 14px; }
+  .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .stat b { font-size: 22px; }
+  .hero-title { font-size: 20px; }
+  .prow { grid-template-columns: 10px 40px minmax(0, 1fr) auto; padding: 9px 12px; }
+  .pdetail { padding: 2px 12px 14px 60px; }
 }
