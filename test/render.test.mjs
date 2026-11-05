@@ -12,7 +12,7 @@ const root = path.join(HERE, '..');
 const { demoModel } = await import(pathToFileURL(path.join(HERE, 'demo.mjs')).href);
 const boardJs = fs.readFileSync(path.join(root, 'lib', 'assets', 'board.js'), 'utf8');
 
-function renderWith(data, lang) {
+function renderWith(data, lang, url) {
   const store = new Map();
   const makeEl = () => ({
     textContent: '', innerHTML: '', title: '',
@@ -28,7 +28,15 @@ function renderWith(data, lang) {
   };
 
   const sandbox = {
-    window: { __BOARD__: data, addEventListener() {}, innerWidth: 1680, innerHeight: 950 },
+    window: {
+      __BOARD__: data, addEventListener() {}, innerWidth: 1680, innerHeight: 950,
+      location: {
+        href: url || 'http://127.0.0.1:3080/goal-gantt',
+        origin: 'http://127.0.0.1:3080',
+        search: url && url.includes('?') ? url.slice(url.indexOf('?')) : '',
+        hash: url && url.includes('#') ? url.slice(url.indexOf('#')) : '',
+      },
+    },
     document: {
       getElementById: getEl,
       querySelector: () => null,
@@ -38,6 +46,7 @@ function renderWith(data, lang) {
       title: '',
     },
     navigator: { language: lang || 'zh-CN' },
+    URL,
     console,
     setInterval: () => 0,
     clearInterval: () => {},
@@ -125,6 +134,16 @@ function check(name, ok) {
   for (const f of ['all', 'active', 'unfinished']) {
     check('筛选含 ' + f, html.includes('data-filter="' + f + '"'));
   }
+}
+
+/* ------------------------------------------- 场景 4.7：URL 带筛选条件 */
+{
+  const { get, sandbox } = renderWith(demoModel(), 'zh-CN', 'http://127.0.0.1:3080/goal-gantt?q=P3&f=active');
+  check('URL 搜索词生效', get('phases').innerHTML.includes('data-card="P3"') && !get('phases').innerHTML.includes('data-card="P4"'));
+  check('URL 搜索词回填到输入框', get('phase-search').value === 'P3');
+  check('URL 过滤器状态', sandbox.window.__goalGantt.filter().status === 'active');
+  const link = sandbox.window.__goalGantt.shareUrl('P3');
+  check('分享链接带筛选条件', link.includes('q=P3') && link.includes('f=active'), link);
 }
 
 /* ------------------------------------------------- 场景 4.6：超大列表 */
