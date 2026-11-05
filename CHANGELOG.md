@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.28.0 — Conversation as a project
+- Sessions without a goal now render an auto-generated project view instead of an empty state.
+- Segments are cut by 20-minute idle gaps; titles come from the first user message in each segment.
+- Each segment counts edits/commands/reads/turns; the hero swaps progress for tool calls, phases and span.
+- Project mode defaults to the full time range and leaves headroom right of “now”.
+
 ## v0.26.0 — Create the example config
 - Empty state gets a “Create example config” button backed by `POST /api/goal-gantt/init`.
 - The route only writes `<workspace>/goal-board/board.config.json`, uses exclusive create (`wx`), and returns 409 when a config exists.

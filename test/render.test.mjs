@@ -169,6 +169,19 @@ function check(name, ok) {
   check('超大列表有“显示更多”', get('phases').innerHTML.includes('group-more'));
 }
 
+/* ------------------------------------------------- 场景 4.8：项目模式 */
+{
+  const { projectModel } = await import(pathToFileURL(path.join(HERE, 'demo.mjs')).href);
+  const { get } = renderWith(projectModel(), 'zh-CN', 'http://127.0.0.1:3080/goal-gantt');
+  const hero = get('hero').innerHTML;
+  check('项目模式：Hero 显示活动摘要', hero.includes('改代码 ×4') && hero.includes('跑命令 ×3'));
+  check('项目模式：统计换成工具/阶段/跨度', hero.includes('工具调用') && hero.includes('总跨度'));
+  check('项目模式：不显示进度条', !hero.includes('hero-bar'));
+  check('项目模式：顶部有自动生成标记', get('head-chips').innerHTML.includes('自动生成'));
+  check('项目模式：行尾显示时长而非百分比', get('phases').innerHTML.includes('30m') && !get('phases').innerHTML.includes('%'));
+  check('项目模式：甘特默认看全貌', get('gantt-hint').textContent.includes('→'));
+}
+
 /* ------------------------------------------------------ 场景 5：没有 goal */
 {
   const model = demoModel();

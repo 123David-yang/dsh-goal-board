@@ -26,3 +26,5 @@ jobs:
         run: node test/perf.test.mjs
       - name: Config robustness
         run: node test/config.test.mjs
+      - name: Project segmentation
+        run: node test/project.test.mjs

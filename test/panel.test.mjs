@@ -17,10 +17,10 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(HERE, '..');
 
-const { demoModel } = await import(pathToFileURL(path.join(HERE, 'demo.mjs')).href);
+const { demoModel, projectModel } = await import(pathToFileURL(path.join(HERE, 'demo.mjs')).href);
 const css = fs.readFileSync(path.join(root, 'lib', 'assets', 'board.css'), 'utf8');
 const js = fs.readFileSync(path.join(root, 'lib', 'assets', 'board.js'), 'utf8');
-const data = JSON.stringify(demoModel());
+const data = JSON.stringify(process.env.PANEL_MODEL === 'project' ? projectModel() : demoModel());
 
 const HARNESS = `<!doctype html>
 <meta charset="utf-8">

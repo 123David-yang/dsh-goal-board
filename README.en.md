@@ -82,6 +82,20 @@ Restart DSH once; a **看板 / Board** tab appears next to 对话 and 轨迹.
 
 The page polls `/api/goal-gantt` every 10 seconds and reflects phase changes.
 
+## Sessions without a goal: conversation as a project
+
+Without a goal the board no longer stops at an empty state. It turns the **conversation itself** into a project:
+
+- Segments are cut by **idle gaps** (20 minutes of silence starts a new segment), not by turn count
+- Each segment is titled by its **first user message**
+- Each segment counts activity types: edits / commands / reads / turns, surfaced in the hero
+- The header is marked “Auto”; no fake percentages — durations and span instead
+- **Zero tokens**: rules over event types and tool names, no model calls
+
+![Project mode](docs/panel-project.png)
+
+The empty state only appears when there are no events at all.
+
 ## Where phases come from
 
 It reads `goal-board/board.config.json` from the workspace:

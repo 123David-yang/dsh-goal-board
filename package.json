@@ -1,7 +1,7 @@
 {
   "name": "dsh-goal-gantt",
-  "version": "0.27.0",
-  "description": "Phase-level progress board for DeepSeek Harness: hero current phase, focused Gantt timeline, grouped phase list with filter/search, Markdown summary and CSV export (zh/en).",
+  "version": "0.28.0",
+  "description": "Progress board for DeepSeek Harness: goal phases as a Gantt timeline, and conversations without a goal auto-abstracted into project segments (zh/en).",
   "type": "module",
   "main": "./lib/index.js",
   "exports": {

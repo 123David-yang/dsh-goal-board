@@ -124,3 +124,58 @@ export function demoModel(now = Date.now()) {
     ],
   };
 }
+
+/** 项目模式演示：没有 goal 的普通对话，按空闲间隔切成工作段。 */
+export function projectModel(now = Date.now()) {
+  const min = 60_000;
+  const base = now - 150 * min;
+  const at = (m) => base + m * min;
+  const seg = (s, e, status) => [{
+    startedAt: at(s), endedAt: status === 'active' ? null : at(e),
+    plannedStart: null, plannedEnd: null, status, progress: 100, summary: '', checks: [],
+  }];
+
+  const phases = [
+    {
+      id: 'S1', title: '帮我分析 C 盘哪些文件可以清理', status: 'done', progress: 100,
+      startedAt: at(0), endedAt: at(24), durationMs: 24 * min,
+      segments: seg(0, 24, 'done'), checks: [], deliverables: [], summary: '',
+      activity: { code: 0, run: 2, read: 14, other: 1, turns: 2, toolCalls: 17 },
+    },
+    {
+      id: 'S2', title: '把分析脚本做成可复用的 CLI', status: 'done', progress: 100,
+      startedAt: at(51), endedAt: at(88), durationMs: 37 * min,
+      segments: seg(51, 88, 'done'), checks: [], deliverables: [], summary: '',
+      activity: { code: 9, run: 6, read: 4, other: 0, turns: 3, toolCalls: 19 },
+    },
+    {
+      id: 'S3', title: '给脚本加一个 --json 输出并写文档', status: 'active', progress: 100,
+      startedAt: at(120), endedAt: null, durationMs: 30 * min,
+      segments: seg(120, null, 'active'), checks: [], deliverables: [], summary: '',
+      activity: { code: 4, run: 3, read: 2, other: 0, turns: 2, toolCalls: 9 },
+    },
+  ];
+
+  return {
+    ok: true,
+    generatedAt: now,
+    mode: 'project',
+    board: { title: 'GOAL 甘特看板', subtitle: 'DSH Goal Gantt Board' },
+    goal: null,
+    session: {
+      id: 'session-demo-project',
+      title: '磁盘清理小工具',
+      cwdName: 'scripts',
+      turns: 7,
+      steps: 45,
+      tokens: 860_000,
+      toolCalls: 45,
+      lastActivityAt: now,
+    },
+    phases,
+    timeline: { from: at(0), to: now, now },
+    overall: 100,
+    distance: { totalPhases: phases.length, remainingPhases: 0, remainingMs: 0 },
+    sessions: [{ id: 'session-demo-project', title: '磁盘清理小工具', hasGoal: false, cwdName: 'scripts' }],
+  };
+}
