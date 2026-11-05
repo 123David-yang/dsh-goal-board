@@ -112,6 +112,10 @@ function check(name, ok) {
   for (const mode of ['now', '6h', '24h', 'all']) {
     check('工具栏含 ' + mode + ' 预设', html.includes('data-mode="' + mode + '"'));
   }
+  check('阶段筛选条存在', html.includes('id="phase-search"') && html.includes('id="phase-filter"'));
+  for (const f of ['all', 'active', 'unfinished']) {
+    check('筛选含 ' + f, html.includes('data-filter="' + f + '"'));
+  }
 }
 
 /* ------------------------------------------------------ 场景 5：没有 goal */
