@@ -47,7 +47,7 @@ function renderWith(data, lang) {
   sandbox.globalThis = sandbox;
   vm.createContext(sandbox);
   vm.runInContext(boardJs, sandbox, { filename: 'board.js' });
-  return { get: getEl };
+  return { get: getEl, sandbox };
 }
 
 let failed = 0;
@@ -58,7 +58,7 @@ function check(name, ok) {
 
 /* ---------------------------------------------------------- 场景 1：常规 */
 {
-  const { get } = renderWith(demoModel());
+  const { get, sandbox } = renderWith(demoModel());
   check('目标文本', get('goal-objective').textContent.length > 0);
   check('总进度环', get('ring-val').textContent.endsWith('%'));
   check('轮次 chip', get('head-chips').innerHTML.includes('轮'));
@@ -67,6 +67,11 @@ function check(name, ok) {
   check('Hero 四个关键数字', (get('hero').innerHTML.match(/class="stat"/g) || []).length === 4);
   check('Hero 进度条', get('hero').innerHTML.includes('hero-bar'));
   check('分享按钮', get('hero').innerHTML.includes('hero-share') && get('hero').innerHTML.includes('data-share="P3"'));
+  check('复制摘要按钮', get('hero').innerHTML.includes('hero-copy-summary'));
+  const md = sandbox.window.__goalGantt.summary(demoModel());
+  check('摘要含标题与总进度', md.startsWith('## ') && md.includes('60%'));
+  check('摘要含状态图标', md.includes('✅') && md.includes('🔄'));
+  check('摘要含剩余阶段', /剩余 2 个阶段/.test(md));
   check('甘特标签', get('glabels').innerHTML.includes('glab'));
   check('甘特条', get('gtracks').innerHTML.includes('gbar'));
   check('条形不溢出到左侧标签列', !/left:-/.test(get('gtracks').innerHTML));
