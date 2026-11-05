@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.25.0 — CSV export
+- Hero gains an “Export CSV” action: id, title, status, progress, planned/actual times, duration, segments, checks and summary.
+- The file is UTF-8 with BOM so Excel opens Chinese text correctly.
+
 ## v0.24.0 — Shareable filters
 - Filter and search state is mirrored into the URL (`?q=…&f=…`) and restored on load.
 - Copied deep links carry the active filter and query.

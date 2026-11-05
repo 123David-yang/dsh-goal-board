@@ -81,6 +81,14 @@ function check(name, ok) {
   check('摘要含标题与总进度', md.startsWith('## ') && md.includes('60%'));
   check('摘要含状态图标', md.includes('✅') && md.includes('🔄'));
   check('摘要含剩余阶段', /剩余 2 个阶段/.test(md));
+  const csv = sandbox.window.__goalGantt.csv(demoModel());
+  check('CSV 表头', csv.split('\n')[0].startsWith('id,title,status,progress'));
+  check('CSV 行数 = 阶段数 + 1', csv.split('\n').length === 7, String(csv.split('\n').length));
+  const quoting = sandbox.window.__goalGantt.csv({
+    ...demoModel(),
+    phases: [{ id: 'Q1', title: 'a,b"c', status: 'done', progress: 100, segments: [], checks: [], summary: 'line\nbreak' }],
+  });
+  check('CSV 正确转义逗号/引号/换行', quoting.includes('"a,b""c"') && quoting.includes('"line\nbreak"'));
   check('甘特标签', get('glabels').innerHTML.includes('glab'));
   check('甘特条', get('gtracks').innerHTML.includes('gbar'));
   check('条形不溢出到左侧标签列', !/left:-/.test(get('gtracks').innerHTML));

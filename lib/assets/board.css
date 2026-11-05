@@ -589,7 +589,7 @@ main > * { width: 100%; }
 .hero-head { display: flex; align-items: center; gap: 10px; }
 
 
-.hero-actions { margin-left: auto; display: inline-flex; gap: 8px; }
+.hero-actions { margin-left: auto; display: inline-flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 
 .hero-share {
   padding: 3px 10px; border-radius: 7px; cursor: pointer;
