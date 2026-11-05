@@ -145,7 +145,19 @@ const { apply } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'index
   console.log('  ok  阶段复用合并');
 }
 
-/* --------------------------------------------------- 8. 内容指纹稳定性 */
+/* ------------------------------------------- 8. 异常时间（倒挂）收敛 */
+
+{
+  const { groupPhases } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'board-data.js')).href);
+  const g = groupPhases([
+    { id: 'PX', title: '倒挂', status: 'done', startedAt: 5000, endedAt: 1000, checks: [], segments: [] },
+  ]);
+  assert.equal(g.length, 1);
+  assert.ok(g[0].segments[0].endedAt >= g[0].segments[0].startedAt, '结束时间不应早于开始时间');
+  console.log('  ok  时间倒挂收敛');
+}
+
+/* --------------------------------------------------- 9. 内容指纹稳定性 */
 
 {
   const { buildBoard } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'board-data.js')).href);

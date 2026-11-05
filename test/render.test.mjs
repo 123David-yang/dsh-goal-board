@@ -66,6 +66,7 @@ function check(name, ok) {
   check('Hero 大标题', get('hero').innerHTML.includes('hero-title'));
   check('Hero 四个关键数字', (get('hero').innerHTML.match(/class="stat"/g) || []).length === 4);
   check('Hero 进度条', get('hero').innerHTML.includes('hero-bar'));
+  check('分享按钮', get('hero').innerHTML.includes('hero-share') && get('hero').innerHTML.includes('data-share="P3"'));
   check('甘特标签', get('glabels').innerHTML.includes('glab'));
   check('甘特条', get('gtracks').innerHTML.includes('gbar'));
   check('条形不溢出到左侧标签列', !/left:-/.test(get('gtracks').innerHTML));
