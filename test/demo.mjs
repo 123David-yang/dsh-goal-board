@@ -6,6 +6,15 @@ export function demoModel(now = Date.now()) {
   const base = now - 6 * hour;
   const at = (h) => base + h * hour;
 
+  const withSegments = (phases) => phases.map((p) => ({
+    ...p,
+    segments: [{
+      startedAt: p.startedAt, endedAt: p.endedAt,
+      plannedStart: p.plannedStart, plannedEnd: p.plannedEnd,
+      status: p.status, progress: p.progress, summary: p.summary, checks: p.checks,
+    }],
+  }));
+
   return {
     ok: true,
     generatedAt: now,
@@ -35,7 +44,7 @@ export function demoModel(now = Date.now()) {
       { id: 'session-demo-0002', title: '日志采集链路排查', hasGoal: true, lastActivityAt: now - 2 * hour, cwdName: 'observability' },
       { id: 'session-demo-0003', title: '文档站迁移', hasGoal: false, lastActivityAt: now - 26 * hour, cwdName: 'docs' },
     ],
-    phases: [
+    phases: withSegments([
       {
         id: 'P0', title: '现状梳理与拆分方案', desc: '理清结算链路边界，确定拆分粒度',
         status: 'done', startedAt: at(0), endedAt: at(0.6), durationMs: 0.6 * hour,
@@ -101,7 +110,7 @@ export function demoModel(now = Date.now()) {
         checks: [{ label: '全量切换', done: false }, { label: '旧逻辑下线', done: false }, { label: '复盘文档', done: false }],
         summary: '', deliverables: [], activity: { toolCalls: 0, turns: 0 }, nextCheck: '全量切换',
       },
-    ],
+    ]),
     timeline: { from: base, to: at(7.6), now },
     overall: 60,
     distance: {

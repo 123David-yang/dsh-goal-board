@@ -130,7 +130,22 @@ const { apply } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'index
   }
 }
 
-/* --------------------------------------------------- 7. 内容指纹稳定性 */
+/* ---------------------------------------------- 7. 阶段复用（同 id 合并） */
+
+{
+  const { groupPhases } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'board-data.js')).href);
+  const merged = groupPhases([
+    { id: 'P1', title: '优化时间轴', status: 'done', startedAt: 1000, endedAt: 2000, checks: [], segments: [] },
+    { id: 'P2', title: '其它', status: 'done', startedAt: 2500, endedAt: 3000, checks: [], segments: [] },
+    { id: 'P1', title: '优化时间轴', status: 'active', startedAt: 4000, endedAt: null, checks: [], segments: [] },
+  ]);
+  assert.equal(merged.length, 2, '同 id 的阶段应合并成一条泳道');
+  assert.equal(merged[0].segments.length, 2, 'P1 应有两个时间段');
+  assert.equal(merged[0].status, 'active', '有进行中段时整体应为进行中');
+  console.log('  ok  阶段复用合并');
+}
+
+/* --------------------------------------------------- 8. 内容指纹稳定性 */
 
 {
   const { buildBoard } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'board-data.js')).href);

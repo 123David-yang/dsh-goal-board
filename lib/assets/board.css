@@ -152,6 +152,17 @@ main > * { min-width: 0; }
   font-size: 12px; letter-spacing: .12em; color: var(--sub); text-transform: uppercase;
 }
 .panel-h .hint { font-size: 11px; letter-spacing: 0; text-transform: none; color: var(--dim); }
+.ph-right { display: flex; align-items: center; gap: 10px; }
+
+.gantt-tools { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.gantt-tools button {
+  background: transparent; border: 0; color: var(--dim); font-size: 11px;
+  padding: 3px 9px; cursor: pointer; font-family: inherit; line-height: 1.6;
+}
+.gantt-tools button + button { border-left: 1px solid var(--line); }
+.gantt-tools button:hover { color: var(--txt); }
+.gantt-tools button.on { background: rgba(56, 189, 248, .14); color: var(--active); }
+.gantt-tools button:focus-visible { outline: 2px solid var(--active); outline-offset: -2px; }
 
 /* ------------------------------------------------------------------ rail */
 

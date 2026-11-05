@@ -22,7 +22,7 @@ function renderWith(data) {
     style: { setProperty() {}, display: '', left: '', top: '', width: '' },
     classList: { add() {}, remove() {}, contains: () => false },
     appendChild() {}, addEventListener() {}, setAttribute() {},
-    getAttribute: () => '', querySelector: () => null, scrollIntoView() {},
+    getAttribute: () => '', querySelector: () => null, querySelectorAll: () => [], scrollIntoView() {},
   });
   const getEl = (id) => {
     if (!store.has(id)) store.set(id, makeEl());
