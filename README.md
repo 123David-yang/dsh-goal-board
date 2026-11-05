@@ -12,6 +12,12 @@
 
 ![看板截图](docs/screenshot.png)
 
+中文 / English 两套界面，按系统语言自动切换（`?lang=zh` / `?lang=en`）：
+
+| 中文 | English |
+|---|---|
+| ![zh](docs/panel-preview.png) | ![en](docs/panel-en.png) |
+
 ## 特性
 
 **一屏看懂三件事**：当前在做哪一阶段（大标题 + 一句话总结）、这一阶段的四个关键数字（进度 / 已用 / 检查项 / 剩余阶段）、以及整体还剩多少。
