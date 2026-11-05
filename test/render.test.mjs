@@ -80,6 +80,9 @@ function check(name, ok) {
   check('阶段清单', get('phases').innerHTML.includes('data-card'));
   check('阶段行可点击', get('phases').innerHTML.includes('class="prow"'));
   check('阶段行显示相对时间', get('phases').innerHTML.includes('class="pwhen"'));
+  check('阶段按状态分组', get('phases').innerHTML.includes('class="group-head"'));
+  check('已完成组默认折叠', !get('phases').innerHTML.includes('data-card="P0"'));
+  check('进行中组默认展开', get('phases').innerHTML.includes('data-card="P3"'));
   check('页脚', get('foot').innerHTML.includes('工具'));
   check('会话选择器', get('session-select').innerHTML.includes('option'));
 }

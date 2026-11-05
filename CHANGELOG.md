@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.22.0 — Status groups
+- Phase list is grouped into In progress / Not started / Blocked / Done.
+- The Done group is collapsed by default; group state persists in localStorage.
+
 ## v0.20.0 — Markdown summary
 - Hero gains a “copy summary” action that produces a paste-ready Markdown block
   (status icons, phase list, time left, round counter).

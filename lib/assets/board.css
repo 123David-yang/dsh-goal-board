@@ -776,3 +776,19 @@ main > * { width: 100%; }
   .phases-tools { margin-right: 8px; }
   .phase-search { width: 110px; }
 }
+
+
+/* ==================================================== 阶段分组 */
+
+.group-head {
+  width: 100%; display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; border: 0; border-top: 1px solid rgba(148, 163, 184, .08);
+  background: transparent; color: var(--dim); font-family: inherit; font-size: 11px;
+  letter-spacing: .08em; cursor: pointer; text-align: left;
+}
+.group:first-child .group-head { border-top: 0; }
+.group-head:hover { color: var(--txt); background: rgba(148, 163, 184, .04); }
+.group-head:focus-visible { outline: 2px solid var(--active); outline-offset: -2px; }
+.gchev { width: 10px; color: var(--dim); }
+.gname { text-transform: uppercase; }
+.gcount { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--dim); }
