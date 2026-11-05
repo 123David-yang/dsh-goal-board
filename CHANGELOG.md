@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.29.0 — Outcomes, not tool ledgers
+- Project segments no longer print tool counts (“edited ×4 · ran ×3”).
+- Each segment now carries the outcome sentence extracted from its last assistant reply.
+- Hero stats switch to segment time / phases / span / active time.
+
 ## v0.28.0 — Conversation as a project
 - Sessions without a goal now render an auto-generated project view instead of an empty state.
 - Segments are cut by 20-minute idle gaps; titles come from the first user message in each segment.

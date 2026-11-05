@@ -48,6 +48,7 @@ function fixture(events, { goal = null } = {}) {
 const user = (time, text) => ({ type: 'user/message', time, data: { content: [{ type: 'text', text }] } });
 const tool = (time, name) => ({ type: 'tool/call', time, data: { name } });
 const turn = (time, n) => ({ type: 'turn/start', time, data: { turn: n } });
+const reply = (time, text) => ({ type: 'assistant/message', time, data: { message: { content: [{ type: 'text', text }] } } });
 
 let failed = 0;
 const check = (name, ok, detail) => {
@@ -69,6 +70,7 @@ const check = (name, ok, detail) => {
     tool(base + 27 * MIN, 'edit_file'),
     tool(base + 28 * MIN, 'edit_file'),
     tool(base + 29 * MIN, 'pwsh'),
+    reply(base + 30 * MIN, '重构完成：支付模块拆成独立服务，**幂等**与灰度都已接上，对账误差压到 0.01%。'),
     /* 空闲 40 分钟 → 第三段 */
     user(base + 70 * MIN, '补一下文档'),
     turn(base + 70.3 * MIN, 3),
@@ -82,6 +84,8 @@ const check = (name, ok, detail) => {
   check('标题取首个需求', model.phases[0].title.includes('C 盘'), model.phases[0].title);
   check('第二段标题正确', model.phases[1].title.includes('支付结算'), model.phases[1].title);
   check('第二段统计改代码 2 次', model.phases[1].activity.code === 2, String(model.phases[1].activity.code));
+  check('第二段摘要取助手结论', model.phases[1].summary.includes('支付模块拆成独立服务'), model.phases[1].summary);
+  check('摘要不是工具流水账', !model.phases[1].summary.includes('×'), model.phases[1].summary);
   check('第二段统计跑命令 1 次', model.phases[1].activity.run === 1, String(model.phases[1].activity.run));
   check('第一段统计读文件 2 次', model.phases[0].activity.read === 2, String(model.phases[0].activity.read));
   check('最后一段为进行中', model.phases[2].status === 'active', model.phases[2].status);

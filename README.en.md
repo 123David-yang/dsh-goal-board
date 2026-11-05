@@ -87,8 +87,9 @@ The page polls `/api/goal-gantt` every 10 seconds and reflects phase changes.
 Without a goal the board no longer stops at an empty state. It turns the **conversation itself** into a project:
 
 - Segments are cut by **idle gaps** (20 minutes of silence starts a new segment), not by turn count
+- The four hero numbers become durations: segment time / phases / span / active time (summed working time)
 - Each segment is titled by its **first user message**
-- Each segment counts activity types: edits / commands / reads / turns, surfaced in the hero
+- Each segment shows **what got done**: one sentence extracted from its last assistant reply (extraction only, no model call) — no tool-ledger
 - The header is marked “Auto”; no fake percentages — durations and span instead
 - **Zero tokens**: rules over event types and tool names, no model calls
 

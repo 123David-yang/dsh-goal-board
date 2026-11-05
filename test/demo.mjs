@@ -140,18 +140,21 @@ export function projectModel(now = Date.now()) {
       id: 'S1', title: '帮我分析 C 盘哪些文件可以清理', status: 'done', progress: 100,
       startedAt: at(0), endedAt: at(24), durationMs: 24 * min,
       segments: seg(0, 24, 'done'), checks: [], deliverables: [], summary: '',
+      summary: '扫描出 C 盘约 38 GB 可清理空间，按「系统缓存 / 残留安装包 / 休眠文件」分了三类，并标出各自风险。',
       activity: { code: 0, run: 2, read: 14, other: 1, turns: 2, toolCalls: 17 },
     },
     {
       id: 'S2', title: '把分析脚本做成可复用的 CLI', status: 'done', progress: 100,
       startedAt: at(51), endedAt: at(88), durationMs: 37 * min,
       segments: seg(51, 88, 'done'), checks: [], deliverables: [], summary: '',
+      summary: '封装成可复用 CLI：支持按类别筛选、--dry-run 预览，超大目录会自动跳过。',
       activity: { code: 9, run: 6, read: 4, other: 0, turns: 3, toolCalls: 19 },
     },
     {
       id: 'S3', title: '给脚本加一个 --json 输出并写文档', status: 'active', progress: 100,
       startedAt: at(120), endedAt: null, durationMs: 30 * min,
       segments: seg(120, null, 'active'), checks: [], deliverables: [], summary: '',
+      summary: '正在给输出加 --json，README 写到一半。',
       activity: { code: 4, run: 3, read: 2, other: 0, turns: 2, toolCalls: 9 },
     },
   ];

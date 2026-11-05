@@ -1,6 +1,6 @@
 {
   "name": "dsh-goal-gantt",
-  "version": "0.28.0",
+  "version": "0.29.0",
   "description": "Progress board for DeepSeek Harness: goal phases as a Gantt timeline, and conversations without a goal auto-abstracted into project segments (zh/en).",
   "type": "module",
   "main": "./lib/index.js",
