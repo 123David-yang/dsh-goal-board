@@ -29,6 +29,7 @@ The UI ships in Chinese and English and follows the system language (`?lang=zh` 
 - **Current chapter** — the active phase is picked automatically, with elapsed time, tool calls, check progress and recent turns
 - **Per-phase summaries** — summary, checks and deliverables, expanded on demand
 - **Filter and search** — All / Active / Open plus a search box (id, title, summary); press `/` to focus it
+- **Shareable filters** — the filter and query live in the URL (`?q=P3&f=active`) and are included in copied links
 - **Copy summary** — copies the current progress as Markdown (status icons, phase list, time left) for issues or chat
 - **Grouped by status** — In progress / Not started / Done, with Done collapsed by default
 - **Relative time** — each row shows “5h ago” or “2h36m in”; expansion and group state persist in localStorage

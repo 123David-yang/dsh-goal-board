@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.24.0 — Shareable filters
+- Filter and search state is mirrored into the URL (`?q=…&f=…`) and restored on load.
+- Copied deep links carry the active filter and query.
+- Fixed: filter button labels and the search placeholder were not localised.
+
 ## v0.23.0 — Big boards
 - Each status group renders at most 40 rows; the rest fold behind a “show more” button.
 - The session list is cached for 3 s instead of rescanning on every request.
