@@ -22,6 +22,10 @@
 - Phase list is grouped into In progress / Not started / Blocked / Done.
 - The Done group is collapsed by default; group state persists in localStorage.
 
+## v0.21.0 — Relative times and expansion memory
+- Phase rows show “5h ago” or “2h36m in”.
+- Expanded phases persist in localStorage.
+
 ## v0.20.0 — Markdown summary
 - Hero gains a “copy summary” action that produces a paste-ready Markdown block
   (status icons, phase list, time left, round counter).
