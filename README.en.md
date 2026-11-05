@@ -30,6 +30,8 @@ The UI ships in Chinese and English and follows the system language (`?lang=zh` 
 - **Per-phase summaries** — summary, checks and deliverables, expanded on demand
 - **Filter and search** — All / Active / Open plus a search box (id, title, summary); press `/` to focus it
 - **Copy summary** — copies the current progress as Markdown (status icons, phase list, time left) for issues or chat
+- **Relative time** — each row shows “5h ago” or “2h36m in”; expanded rows persist in localStorage
+- See [CHANGELOG.md](CHANGELOG.md)
 - **Distance to goal** — remaining phases, rounds and estimated time, folded into the hero
 - **Inline rendering** — lives in the conversation view ring (`对话 / 轨迹 / 看板`), styles isolated with Shadow DOM; a standalone page is available too
 - **No flicker** — a content fingerprint keeps the DOM stable while only the time cursor moves

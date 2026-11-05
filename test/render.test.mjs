@@ -79,6 +79,7 @@ function check(name, ok) {
   check('时间刻度', get('gaxis').innerHTML.includes('tick'));
   check('阶段清单', get('phases').innerHTML.includes('data-card'));
   check('阶段行可点击', get('phases').innerHTML.includes('class="prow"'));
+  check('阶段行显示相对时间', get('phases').innerHTML.includes('class="pwhen"'));
   check('页脚', get('foot').innerHTML.includes('工具'));
   check('会话选择器', get('session-select').innerHTML.includes('option'));
 }

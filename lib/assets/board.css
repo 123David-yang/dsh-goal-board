@@ -674,6 +674,8 @@ main > * { width: 100%; }
 .ptitle { font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .ppct { font-size: 12px; color: var(--dim); font-variant-numeric: tabular-nums; }
+.pwhen { font-size: 11px; color: var(--dim); margin-left: auto; margin-right: 4px; white-space: nowrap; }
+.prow { grid-template-columns: 12px 52px minmax(0, 1fr) auto auto; }
 
 
 .phase.open { background: rgba(56, 189, 248, .04); }
@@ -739,6 +741,7 @@ main > * { width: 100%; }
   .stat b { font-size: 22px; }
   .hero-title { font-size: 20px; }
   .prow { grid-template-columns: 10px 40px minmax(0, 1fr) auto; padding: 9px 12px; }
+  .pwhen { display: none; }
   .pdetail { padding: 2px 12px 14px 60px; }
 }
 
