@@ -105,6 +105,15 @@ function check(name, ok) {
   check('长标题仍在清单里', get('phases').innerHTML.includes('data-card'));
 }
 
+/* --------------------------------------------------- 场景 4.5：缩放预设 */
+{
+  const { renderPage } = await import(pathToFileURL(path.join(root, 'lib', 'view.js')).href);
+  const html = renderPage(demoModel());
+  for (const mode of ['now', '6h', '24h', 'all']) {
+    check('工具栏含 ' + mode + ' 预设', html.includes('data-mode="' + mode + '"'));
+  }
+}
+
 /* ------------------------------------------------------ 场景 5：没有 goal */
 {
   const model = demoModel();
