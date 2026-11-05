@@ -61,7 +61,7 @@ const { apply } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'index
     webServer: { register: (route) => { routes.push(route); return () => {}; } },
   };
   apply(ctx, {});
-  assert.deepEqual(routes.map((r) => r.path).sort(), ['/api/goal-board', '/goal-board', '/goal-board/asset']);
+  assert.deepEqual(routes.map((r) => r.path).sort(), ['/api/goal-gantt', '/goal-gantt', '/goal-gantt/asset']);
 
   const res = () => {
     const r = { statusCode: 0, headers: {}, body: '', setHeader(k, v) { this.headers[k] = v; }, end(b) { this.body = b; } };
@@ -69,22 +69,22 @@ const { apply } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'index
   };
 
   const page = res();
-  await routes.find((r) => r.path === '/goal-board').handler({ url: '/goal-board' }, page);
+  await routes.find((r) => r.path === '/goal-gantt').handler({ url: '/goal-gantt' }, page);
   assert.ok([200, 503].includes(page.statusCode), '页面应返回 200 或 503');
   console.log('  ok  页面路由');
 
   const api = res();
-  await routes.find((r) => r.path === '/api/goal-board').handler({ url: '/api/goal-board' }, api);
+  await routes.find((r) => r.path === '/api/goal-gantt').handler({ url: '/api/goal-gantt' }, api);
   JSON.parse(api.body);
   console.log('  ok  数据路由');
 
   const asset = res();
-  await routes.find((r) => r.path === '/goal-board/asset').handler({ url: '/goal-board/asset/board.css' }, asset);
+  await routes.find((r) => r.path === '/goal-gantt/asset').handler({ url: '/goal-gantt/asset/board.css' }, asset);
   assert.equal(asset.statusCode, 200);
   assert.ok(String(asset.body).length > 100, '资源路由应返回内容');
 
   const evil = res();
-  await routes.find((r) => r.path === '/goal-board/asset').handler({ url: '/goal-board/asset/../../secret' }, evil);
+  await routes.find((r) => r.path === '/goal-gantt/asset').handler({ url: '/goal-gantt/asset/../../secret' }, evil);
   assert.equal(evil.statusCode, 400, '目录穿越应被拒绝');
   console.log('  ok  静态资源与穿越防护');
 }
@@ -100,7 +100,7 @@ const { apply } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'index
   };
   apply(ctx, {});
   const res = { statusCode: 0, headers: {}, body: '', setHeader() {}, end(b) { this.body = b; } };
-  await routes.find((r) => r.path === '/api/goal-board').handler({ url: '/api/goal-board' }, res);
+  await routes.find((r) => r.path === '/api/goal-gantt').handler({ url: '/api/goal-gantt' }, res);
   assert.equal(res.statusCode, 401, '信任围栏拒绝时应短路');
   console.log('  ok  路由鉴权短路');
 }
@@ -119,7 +119,7 @@ const { apply } = await import(pathToFileURL(path.join(HERE, '..', 'lib', 'index
       webServer: { register: (r) => { routes.push(r); return () => {}; } },
     }, {});
     const res = { statusCode: 0, headers: {}, body: '', setHeader(k, v) { this.headers[k] = v; }, end(b) { this.body = b; } };
-    await routes.find((r) => r.path === '/api/goal-board').handler({ url: '/api/goal-board' }, res);
+    await routes.find((r) => r.path === '/api/goal-gantt').handler({ url: '/api/goal-gantt' }, res);
     const model = JSON.parse(res.body);
     assert.equal(res.statusCode, 200, '真实数据应返回 200');
     assert.ok(model.phases.length > 0, '真实数据应有阶段');

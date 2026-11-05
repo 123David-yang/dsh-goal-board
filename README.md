@@ -1,4 +1,4 @@
-# dsh-goal-board · Goal 甘特看板
+# dsh-goal-gantt · Goal 甘特看板
 
 为 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 提供的 **goal 阶段级进度看板**。
 
@@ -33,7 +33,7 @@
 ### 方式二：CLI
 
 ```bash
-dsh plugin add github:123David-yang/dsh-goal-board
+dsh plugin add github:123David-yang/dsh-goal-gantt
 ```
 
 ### 方式三：手动脚本
@@ -52,9 +52,9 @@ pwsh -File scripts/install.ps1
 - **会话顶部的「看板」标签页**（就在「对话 / 轨迹」旁边）——点开即在当前会话内展示，
   不跳转、不新开页面；切换会话时自动跟随
 - 渲染走 Shadow DOM，样式与宿主完全隔离，不会污染 DSH 自己的 CSS
-- 也可以直接访问 `http://127.0.0.1:3080/goal-board` 看独立页面
+- 也可以直接访问 `http://127.0.0.1:3080/goal-gantt` 看独立页面
 
-页面每 10 秒自动拉一次 `/api/goal-board`，阶段状态变化会实时反映。
+页面每 10 秒自动拉一次 `/api/goal-gantt`，阶段状态变化会实时反映。
 
 ## 阶段从哪来
 
@@ -120,9 +120,9 @@ node test/render.test.mjs   # 用 DOM 桩跑一遍渲染
 ## 结构
 
 ```
-dsh-goal-board/
+dsh-goal-gantt/
 ├── lib/
-│   ├── index.js          host 半侧：/goal-board 与 /api/goal-board
+│   ├── index.js          host 半侧：/goal-gantt 与 /api/goal-gantt
 │   ├── board-data.js     会话发现、zstd 解码、阶段模型
 │   ├── view.js           HTML 模板（内联 CSS/JS/首屏数据）
 │   ├── client.js         浏览器半侧：侧栏图标 / 主区页面 / 头部按钮

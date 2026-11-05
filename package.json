@@ -1,6 +1,6 @@
 {
-  "name": "dsh-goal-board",
-  "version": "0.5.2",
+  "name": "dsh-goal-gantt",
+  "version": "0.6.0",
   "description": "Goal Gantt board for DeepSeek Harness: phase-level progress timeline, current chapter, per-phase summaries and distance to goal.",
   "type": "module",
   "main": "./lib/index.js",
@@ -30,7 +30,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/123David-yang/dsh-goal-board.git"
+    "url": "git+https://github.com/123David-yang/dsh-goal-gantt.git"
   },
   "engines": {
     "node": ">=20"

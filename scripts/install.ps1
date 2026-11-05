@@ -21,7 +21,7 @@ if (-not $Profile -or -not (Test-Path $Profile)) {
 }
 
 $source = Split-Path $PSScriptRoot -Parent
-$dest = Join-Path $Profile 'node_modules\dsh-goal-board'
+$dest = Join-Path $Profile 'node_modules\dsh-goal-gantt'
 
 New-Item -ItemType Directory -Force -Path (Join-Path $dest 'lib') | Out-Null
 Copy-Item (Join-Path $source 'package.json') $dest -Force
@@ -36,11 +36,11 @@ if (-not (Test-Path $patch)) {
 }
 
 $content = Get-Content $patch -Raw
-if ($content -notmatch 'dsh-goal-board') {
-    Add-Content -Path $patch -Value "`n- insert:`n    - id: goal-board`n      name: dsh-goal-board`n" -Encoding utf8
+if ($content -notmatch 'dsh-goal-gantt') {
+    Add-Content -Path $patch -Value "`n- insert:`n    - id: goal-gantt`n      name: dsh-goal-gantt`n" -Encoding utf8
     Write-Host "已注册到 cordis.patch.yml"
 } else {
-    Write-Host "cordis.patch.yml 中已存在 dsh-goal-board"
+    Write-Host "cordis.patch.yml 中已存在 dsh-goal-gantt"
 }
 
 Write-Host "已安装到 $dest"

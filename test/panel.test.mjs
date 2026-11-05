@@ -38,7 +38,7 @@ const HARNESS = `<!doctype html>
     const u = String(url);
     if (u.indexOf('board.css') >= 0) return Promise.resolve(new Response(CSS, { headers: { 'content-type': 'text/css' } }));
     if (u.indexOf('board.js') >= 0) return Promise.resolve(new Response(JS, { headers: { 'content-type': 'text/javascript' } }));
-    if (u.indexOf('/api/goal-board') >= 0) return Promise.resolve(new Response(JSON.stringify(DATA), { headers: { 'content-type': 'application/json' } }));
+    if (u.indexOf('/api/goal-gantt') >= 0) return Promise.resolve(new Response(JSON.stringify(DATA), { headers: { 'content-type': 'application/json' } }));
     if (u.indexOf('/done') >= 0) return realFetch(u);
     return Promise.reject(new Error('unexpected fetch: ' + u));
   };

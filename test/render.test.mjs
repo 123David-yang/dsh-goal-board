@@ -74,7 +74,7 @@ function check(name, ok) {
   check('当前章节', get('chapter').innerHTML.includes('CURRENT CHAPTER'));
   check('距目标', get('distance').innerHTML.includes('DISTANCE TO GOAL'));
   check('阶段卡片', get('cards').innerHTML.includes('data-card'));
-  check('页脚', get('foot').innerHTML.includes('/api/goal-board'));
+  check('页脚', get('foot').innerHTML.includes('/api/goal-gantt'));
   check('会话选择器', get('session-select').innerHTML.includes('option'));
   check('计划/实际分开显示', get('cards').innerHTML.includes('计划 ') && get('cards').innerHTML.includes('实际 '));
 }
